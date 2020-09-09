@@ -1,0 +1,8 @@
+discovery.type: single-node
+http.cors.enabled: true
+http.cors.allow-origin: /.*/
+
+index:
+  codec: "best_compression"
+
+network.host: 0.0.0.0
