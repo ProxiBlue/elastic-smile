@@ -1,6 +1,7 @@
 discovery.type: single-node
 http.cors.enabled: true
 http.cors.allow-origin: /.*/
+xpack.security.enabled: false
 
 index:
   codec: "best_compression"
