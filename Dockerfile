@@ -1,4 +1,4 @@
-ARG ELASTIC_VERSION="6.8.13"
+ARG ELASTIC_VERSION="7.10.1"
 
 FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
 
