@@ -122,14 +122,27 @@ LABEL org.label-schema.build-date="2020-12-05T01:00:33.671820Z" \
 RUN bin/elasticsearch-plugin install analysis-icu
 RUN bin/elasticsearch-plugin install analysis-phonetic
 
+RUN yum update -y && \
+yum install -y epel-release && \
+yum update -y && \
+yum install -y supervisor && \
+systemctl enable supervisord && \
+mkdir -p /usr/share/elasticsearch/ && \
+chmod 777 /usr/share/elasticsearch -R && \
+mkdir -p /var/log/supervisor && \
+mkdir /var/log/elasticsearch/
+
+COPY supervisord.conf /etc/supervisor/supervisord.conf
+
 ENV discovery.type=single-node
 ENV xpack.security.enabled=false
 
 RUN mkdir -p /usr/share/elasticsearch/ && chmod 777 /usr/share/elasticsearch -R
 
-ENTRYPOINT ["/tini", "--", "/usr/local/bin/docker-entrypoint.sh"]
+#ENTRYPOINT ["/tini", "--", "/usr/local/bin/docker-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint
-CMD ["eswrapper"]
+#CMD ["eswrapper"]
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
 ################################################################################
 # End of multi-stage Dockerfile
